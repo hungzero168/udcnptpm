@@ -97,41 +97,25 @@
 				<div class="container-fluid">
 					<form method="post"
 						action="${pageContext.request.contextPath}/themvaogiohang">
-
-
 						<div class="wrapper row">
 							<div class="preview col-md-6">
 								<div class="preview-pic tab-content">
+								<c:forEach items="${DSBike}" var="bike">
 									<div class="tab-pane active" id="pic-1">
 										<img
-											src="https://xedap.vn/wp-content/uploads/2023/07/2024_FastroadADV2_HeliosOrange.jpg"
+											src="${bike.imagelink }"
 											alt="Product Image">
 									</div>
-									<div class="tab-pane" id="pic-2">
-										<img
-											src="https://xedap.vn/wp-content/uploads/2023/07/2024_FastroadADV2_HeliosOrange_0.jpg"
-											alt="Product Image">
-									</div>
-									<div class="tab-pane" id="pic-3">
-										<img
-											src="https://xedap.vn/wp-content/uploads/2023/07/2024_FastroadADV2_HeliosOrange_5.jpg"
-											alt="Product Image">
-									</div>
+									</c:forEach>
 								</div>
 								<ul class="preview-thumbnail nav nav-tabs">
+								<c:forEach items="${DSBike}" var="bike">
 									<li class="active"><a data-target="#pic-1"
 										data-toggle="tab"> <img
-											src="https://xedap.vn/wp-content/uploads/2023/07/2024_FastroadADV2_HeliosOrange.jpg"
+											src="${bike.imagelink }"
 											alt="Thumbnail">
 									</a></li>
-									<li><a data-target="#pic-2" data-toggle="tab"> <img
-											src="https://xedap.vn/wp-content/uploads/2023/07/2024_FastroadADV2_HeliosOrange.jpg"
-											alt="Thumbnail">
-									</a></li>
-									<li><a data-target="#pic-3" data-toggle="tab"> <img
-											src="https://xedap.vn/wp-content/uploads/2023/07/2024_FastroadADV2_HeliosOrange.jpg"
-											alt="Thumbnail">
-									</a></li>
+									</c:forEach>
 								</ul>
 							</div>
 							<div class="details col-md-6">
@@ -146,9 +130,9 @@
 								<h5 class="sizes">
 									Màu và Size:<br />
 									<c:forEach var="bike" items="${DSBike}">
-										<label> <input type="radio" name="bikeColor"
+										<label> <input class="product-select" type="radio" name="bikeColor"
 											value="${bike.color}" data-bikecode="${bike.bikecode}"
-											onchange="updateBikeCode(this)"> ${bike.color}
+											onchange="updateBikeCode(this)" data-bikeamount="${bike.amount }"> ${bike.color}
 										</label>
 										<br />
 									</c:forEach>
@@ -182,16 +166,30 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
-		function updateBikeCode(radio) {
-			var bikeCode = radio.getAttribute("data-bikecode");
-			document.getElementById("bikeCode").value = bikeCode;
-		}
-
-		function updateQuantity(input) {
-			var quantity = input.value;
-			console.log("Số lượng cập nhật:", quantity);
-			document.getElementById("sp_soluong").value = quantity;
-		}
+	
+	var amount;
+			function updateBikeCode(radio) {
+				var bikeCode = radio.getAttribute("data-bikecode");
+				document.getElementById("bikeCode").value = bikeCode;
+				amount = radio.getAttribute("data-bikeamount");
+	       
+			}
+			function updateQuantity(input) {
+				var quantity = input.value;
+				console.log("Số lượng cập nhật:", quantity);
+				document.getElementById("sp_soluong").value = quantity;
+				
+				const so1 = parseInt(quantity, 10);
+				const so2=parseInt(amount, 10);
+				
+				if(so1>so2){
+					alert("Cửa hàng không đủ")
+					document.getElementById("btnThemVaoGioHang").disabled=true;
+					
+				}
+			}
+			
+		
 	</script>
 </body>
 </html>

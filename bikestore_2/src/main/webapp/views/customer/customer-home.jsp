@@ -1,3 +1,5 @@
+<%@page import="models.Bike"%>
+<%@page import="dao.BikeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -33,7 +35,9 @@
 								class="text-decoration-none text-dark">
 								<div class="card d-flex flex-column align-items-center">
 									<div class="card-img">
-										<img src="#" alt="${category.name}" class="img-fluid">
+									<c:set var="bike" value="${demo.getBikeByCategoryCode(category.code)}" scope="page" />
+										<img src="<c:out value="${bike.imagelink}"></c:out>"class="img-fluid">
+										
 									</div>
 									<div class="card-body text-center">
 										<h5 class="card-title">${category.name}</h5>

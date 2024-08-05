@@ -9,6 +9,12 @@ public class Bike {
 
 	public Bike() {
 		super();
+		this.bikecode = "";
+		this.color = "";
+		this.categorycode = "";
+		this.amount = 0;
+		this.imagelink = "";
+		
 	}
 
 	public Bike(String bikecode, String color, String categorycode, int amount, String imagelink) {

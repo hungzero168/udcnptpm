@@ -39,16 +39,29 @@ public class BikeDAO {
         }
         return listAll;
     }
+    
+    public Bike getBikeByCategoryCode(String categorycode) {
+    	PreparedStatement pr=null;
+    	ResultSet rs=null;
+    	if(con!=null) {
+    		try {
+				pr=con.prepareStatement("select *from bike where categorycode=?");
+				pr.setString(1, categorycode);
+				rs=pr.executeQuery();
+				while(rs.next()) {
+					Bike bk = new Bike(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+					return bk;
+				}
+			} catch (SQLException e) {
+				return new Bike();
+			}
+    	}
+    	return new Bike();
+    }
 
     public static void main(String[] args) {
         BikeDAO demo = new BikeDAO();
-        try {
-            ArrayList<Bike> bike = demo.findAll("CT01");
-            for (Bike bk : bike) {
-                System.out.println(bk.toString());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Bike bike=demo.getBikeByCategoryCode("CT01");
+        System.out.println(bike.getColor());
     }
 }

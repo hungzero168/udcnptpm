@@ -46,9 +46,9 @@ public class customerHome extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    CategoryDAO cDAO = new CategoryDAO();
-	    BikeDAO bDAO = new BikeDAO();
+	    BikeDAO demo = new BikeDAO();
+	    request.setAttribute("demo", demo);
 	    ArrayList<models.Category> categories = null;
-	    ArrayList<Bike> bikes = null;
 	    try {
 	        categories = cDAO.findAll();
 //	        bikes = bDAO.getAll();
@@ -57,7 +57,7 @@ public class customerHome extends HttpServlet {
 	    }
 
 	    request.setAttribute("categories", categories);
-	    request.setAttribute("bikes", bikes);
+//	    request.setAttribute("bikes", bikes);
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/views/customer/customer-home.jsp");
 	    dispatcher.forward(request, response);
 	}
