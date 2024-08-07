@@ -128,7 +128,7 @@
 									<strong>Uy tín</strong>!
 								</p>
 								<h5 class="sizes">
-									Màu và Size:<br />
+									Màu :<br />
 									<c:forEach var="bike" items="${DSBike}">
 										<label> <input class="product-select" type="radio" name="bikeColor"
 											value="${bike.color}" data-bikecode="${bike.bikecode}"
@@ -186,7 +186,10 @@
 					alert("Cửa hàng không đủ")
 					document.getElementById("btnThemVaoGioHang").disabled=true;
 					
+				}else{
+					document.getElementById("btnThemVaoGioHang").disabled=false;
 				}
+				
 			}
 			
 		

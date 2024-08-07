@@ -18,12 +18,10 @@
 	href="${pageContext.request.contextPath}/views/include/css/style.css">
 <script
 	src="${pageContext.request.contextPath}/views/include/js/script.js"></script>
-	
+
 </head>
 <body>
-
-	<%@ include file="/views/include/header.jsp"%>
-
+<%@ include file="cs-header.jsp"%>
 	<div class="container">
 		<div id="content" class="my-5">
 			<div id="products">
@@ -35,9 +33,12 @@
 								class="text-decoration-none text-dark">
 								<div class="card d-flex flex-column align-items-center">
 									<div class="card-img">
-									<c:set var="bike" value="${demo.getBikeByCategoryCode(category.code)}" scope="page" />
-										<img src="<c:out value="${bike.imagelink}"></c:out>"class="img-fluid">
-										
+										<c:set var="bike"
+											value="${demo.getBikeByCategoryCode(category.code)}"
+											scope="page" />
+										<img src="<c:out value="${bike.imagelink}"></c:out>"
+											class="img-fluid">
+
 									</div>
 									<div class="card-body text-center">
 										<h5 class="card-title">${category.name}</h5>
@@ -52,6 +53,13 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".main_nav_menu").hide();
+			$(".wishlist").hide();
+			$(".cart").hide();
+		});
+	</script>
 </body>
 </html>

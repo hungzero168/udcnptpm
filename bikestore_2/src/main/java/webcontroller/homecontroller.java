@@ -1,6 +1,8 @@
 package webcontroller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.BikeDAO;
+import dao.CategoryDAO;
 import dao.UserDAO;
 import models.User;
 
@@ -35,6 +39,20 @@ public class homecontroller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		CategoryDAO cDAO = new CategoryDAO();
+	    BikeDAO demo = new BikeDAO();
+	    request.setAttribute("demo", demo);
+	    ArrayList<models.Category> categories = null;
+	    try {
+	        categories = cDAO.findAll();
+//	        bikes = bDAO.getAll();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    request.setAttribute("categories", categories);
+//		
+		//kiem tra dang nhap
 		HttpSession session=request.getSession();
 		User user=(User)session.getAttribute("user");
 		if(user!=null) {

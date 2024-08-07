@@ -1,25 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/views/include/css/style.css">
-<script
-	src="${pageContext.request.contextPath}/views/include/js/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
-</head>
-<body>
-	<header class="header">
-		<!-- Top Bar -->
+    pageEncoding="UTF-8"%>
+<header class="header">
+<!-- Top Bar -->
 
 		<div class="top_bar">
 			<div class="container">
@@ -33,11 +15,7 @@
 										alt="">
 								</div>
 								<div>
-									<a href="${pageContext.request.contextPath}/login">Đăng
-										nhập</a>
-								</div>
-								<div>
-									<a href="#">Đăng ký</a>
+									<a href="${pageContext.request.contextPath}/login">${sessionScope.user.fullname}</a>
 								</div>
 							</div>
 						</div>
@@ -45,10 +23,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="header_main">
+<div class="header_main">
 			<div class="container">
 				<div class="row">
-					<!-- Logo -->
+				
+				<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
 							<div class="logo">
@@ -93,47 +72,42 @@
 						</div>
 					</div>
 
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		
-		</header>
-		<div class="container">
-		<div id="content" class="my-5">
-			<div id="products">
-				<div class="row mx-0">
-					<c:forEach var="category" items="${categories}">
-						<div class="col-lg-4 col-md-6 mb-4">
-							<a
-								href="${pageContext.request.contextPath}/categoryDetail?code=${category.code}"
-								class="text-decoration-none text-dark">
-								<div class="card d-flex flex-column align-items-center">
-									<div class="card-img">
-										<c:set var="bike"
-											value="${demo.getBikeByCategoryCode(category.code)}"
-											scope="page" />
-										<img src="<c:out value="${bike.imagelink}"></c:out>"
-											class="img-fluid">
-
-									</div>
-									<div class="card-body text-center">
-										<h5 class="card-title">${category.name}</h5>
-										<p class="card-text font-weight-bold text-primary">${category.price}
-											VNĐ</p>
+					<!-- Wishlist -->
+					<div
+						class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+						<div
+							class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+							<div
+								class="wishlist d-flex flex-row align-items-center justify-content-end">
+								<div class="wishlist_icon">
+									<img
+										src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918681/heart.png"
+										alt="">
+								</div>
+								<div class="wishlist_content">
+									<div class="wishlist_text">
+										<a href="#">Đơn hàng</a>
 									</div>
 								</div>
-							</a>
-						</div>
-					</c:forEach>
-				</div>
-			</div>
-		</div>
-	</div>
+							</div>
 
-	
-	
-</body>
-</html>
+							<!-- Cart -->
+							<div class="cart">
+								<div
+									class="cart_container d-flex flex-row align-items-center justify-content-end">
+									<div class="cart_icon">
+										<img
+											src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png"
+											alt="">
+									</div>
+									<div class="cart_content">
+										<div class="cart_text">
+											<a href="${pageContext.request.contextPath}/giohang">Giỏ hàng</a>
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+				</div>
+				</div>
+</header>

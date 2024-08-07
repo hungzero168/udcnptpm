@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import models.User;
 
 public class UserDAO {
-	Connection con;
-
+	private Connection con;
+	
+	
 	public UserDAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

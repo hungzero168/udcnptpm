@@ -15,9 +15,11 @@ import javax.servlet.http.HttpSession;
 import dao.BikeDAO;
 import dao.CategoryDAO;
 import dao.CategoryDetailDAO;
+import dao.GioHangDAO;
 import models.Bike;
 import models.Category;
 import models.CategoryDetail;
+import models.OrderDetail;
 import models.User;
 
 /**
@@ -39,28 +41,41 @@ public class giohang extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session=request.getSession();
+		User user=(User)session.getAttribute("user");
 		
-		CategoryDAO categorys = new CategoryDAO();
-		Category category = null;
+		GioHangDAO gioHangDAO=new GioHangDAO();
+		String ordercode=gioHangDAO.findGiobyState(user.getUsername(),"1");
+		ArrayList<OrderDetail> orderDetails=gioHangDAO.findOrderDetailByCode(ordercode);
 		
-		CategoryDetailDAO detailDAO = new CategoryDetailDAO();
-		CategoryDetail categoryDetail = null;
+		request.setAttribute("ordercode", ordercode);
 		
-		BikeDAO bikeDAO = new BikeDAO();
-		ArrayList<Bike> DSBike = null;
+		float tong=0;
+		for(int i=0;i<orderDetails.size();i++) {
+			int soluong=orderDetails.get(i).getAmount();
+			
+			CategoryDAO categoryDAO=new CategoryDAO();
+			Category category=null;
+			BikeDAO bikeDAO=new BikeDAO();
+			Bike bike=bikeDAO.getBikeByCode(orderDetails.get(i).getBikecode());
+			try {
+				category= categoryDAO.getDetail(bike.getCategorycode());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			float gia=category.getPrice();
+			tong =tong+(gia*soluong);
+		}
+		String formattedNumber = String.format("%,.2f", tong); 
+		request.setAttribute("tong", formattedNumber);
 		
-//		try {
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		request.setAttribute("orderDetails",orderDetails);
+		RequestDispatcher rd = request.getRequestDispatcher("/views/customer/gio-hang.jsp");
+	    rd.forward(request, response);
 		
-		request.setAttribute("category", category);
-//		RequestDispatcher rd = request.getRequestDispatcher("/views/customer/category-detail.jsp");
-//		rd.forward(request, response);
-		
-		response.sendRedirect("views/customer/gio-hang.jsp");
+//		response.sendRedirect("views/customer/gio-hang.jsp");
 	}
 
 	/**
@@ -69,6 +84,29 @@ public class giohang extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		User user=(User)session.getAttribute("user");
+		
+		
+		
+//		CategoryDAO categorys = new CategoryDAO();
+//		Category category = null;
+//		
+//		CategoryDetailDAO detailDAO = new CategoryDetailDAO();
+//		CategoryDetail categoryDetail = null;
+//		
+//		BikeDAO bikeDAO = new BikeDAO();
+//		ArrayList<Bike> DSBike = null;
+//		
+////		try {
+////			
+////		} catch (SQLException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//		
+//		request.setAttribute("category", category);
+////		RequestDispatcher rd = request.getRequestDispatcher("/views/customer/category-detail.jsp");
+////		rd.forward(request, response);
+//		
 		
 		
 	}

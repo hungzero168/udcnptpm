@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import models.OrderDetail;
 
 public class GioHangDAO {
 	Connection con;
@@ -42,8 +45,25 @@ public class GioHangDAO {
 	    }
 	    return null;
 	}
-
-
+	
+	public ArrayList<OrderDetail> findOrderDetailByCode(String code){
+		ArrayList<OrderDetail> list=new ArrayList<OrderDetail>();
+		PreparedStatement pr=null;
+		ResultSet rs=null;
+		try {
+			pr=con.prepareStatement("select *from oderdetail where ordercode=?");
+			pr.setString(1, code);
+			rs=pr.executeQuery();
+			while(rs.next()) {
+				OrderDetail orderDetail=new OrderDetail(code, rs.getString(3), rs.getInt(4));
+				list.add(orderDetail);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	
 	public void insertOrder(String ordercode, String username, String state) throws SQLException {
@@ -64,4 +84,23 @@ public class GioHangDAO {
             statement.executeUpdate();
         }
     }
+	
+	public void updateOrderState(String ordercode, String username, int state) throws SQLException {
+        String sql = "UPDATE orders SET state=? WHERE ordercode=? AND username=?";
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+        	statement.setInt(1, state);
+            statement.setString(2, ordercode);
+            statement.setString(3, username);
+            statement.executeUpdate();
+        }
+    }
+	public static void main(String[] args) {
+		GioHangDAO demo=new GioHangDAO();
+		try {
+			demo.updateOrderState("OD2671319", "user1",2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("ok");
+	}
 }

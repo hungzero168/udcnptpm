@@ -46,15 +46,14 @@ public class themvaogiohang extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session=request.getSession();
+		//check cart
+		
 		User user=(User)session.getAttribute("user");
-		 
+		
 		String bikeCode = request.getParameter("bikeCode");
 		int quantity = Integer.parseInt(request.getParameter("sp_soluong"));
 		String categorycode =request.getParameter("categorycode");
-		
 		String state = "1";
-		
-		
 		
 		
 		if (bikeCode == null) {
@@ -86,10 +85,11 @@ public class themvaogiohang extends HttpServlet {
 				e.printStackTrace();
 			}
 			
+			response.sendRedirect(request.getContextPath()+"/giohang");
 			
-			
-			request.getSession().setAttribute("sucssMessageCart", "Thêm vào giỏ hàng thành công.");
-	        response.sendRedirect(request.getContextPath() + "/categoryDetail?code=" + categorycode);
+//			request.getSession().setAttribute("sucssMessageCart", "Thêm vào giỏ hàng thành công.");
+//	        response.sendRedirect(request.getContextPath() + "/categoryDetail?code=" + categorycode);
+//			response.sendRedirect(request.);
 		}
 	}
 
